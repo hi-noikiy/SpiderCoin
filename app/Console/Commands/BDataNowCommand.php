@@ -57,7 +57,7 @@ class BDataNowCommand extends Command
         switch ( $platformName ){
             // 获取 OKCoin 行情
             case 'OkCoin':
-                $client = new OKCoin(new OKCoin_ApiKeyAuthentication( '' , ''));
+                $client = new OKCoin(new OKCoin_ApiKeyAuthentication());
                 $result = $client -> tickerApi( $symbol );
                 break;
             // 获取 OKCoin 行情
@@ -74,7 +74,7 @@ class BDataNowCommand extends Command
                 break;
             // 获取 P网 行情
             case 'Poloniex':
-                $poloniex =  new Poloniex('','');
+                $poloniex =  new Poloniex();
                 $result = $poloniex->get_ticker();
                 break;
         }

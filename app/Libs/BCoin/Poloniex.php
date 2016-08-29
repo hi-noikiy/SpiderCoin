@@ -8,7 +8,7 @@ class Poloniex {
 	protected $trading_url = "https://poloniex.com/tradingApi";
 	protected $public_url = "https://poloniex.com/public";
 
-	public function __construct($api_key, $api_secret) {
+	public function __construct($api_key = '', $api_secret = '') {
 		$this->api_key = $api_key;
 		$this->api_secret = $api_secret;
 	}
@@ -32,7 +32,7 @@ class Poloniex {
 		);
 
 		// curl handle (initialize if required)
-		static $ch = null;
+		$ch = null;
 		if (is_null($ch)) {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -141,6 +141,11 @@ class Poloniex {
 		);
 	}
 
+	/**
+	 * 获取历史交易记录
+	 * @param $pair
+	 * @return mixed
+	 */
 	public function get_trade_history($pair) {
 		$trades = $this->retrieveJSON($this->public_url.'?command=returnTradeHistory&currencyPair='.strtoupper($pair));
 		return $trades;
@@ -155,12 +160,16 @@ class Poloniex {
 			'period' 		=> 300,
 		];
 		$url = $this->public_url.'?'.http_build_query( $params );
-		var_dump($url);
 		$trades = $this->retrieveJSON( $url );
 		return $trades;
 	}
 
-	public function get_order_book($pair) {
+	/**
+	 * 获取市场深度
+	 * @param $pair
+	 * @return mixed
+	 */
+	public function get_order_book($pair = 'ALL') {
 		$orders = $this->retrieveJSON($this->public_url.'?command=returnOrderBook&currencyPair='.strtoupper($pair));
 		return $orders;
 	}
@@ -169,6 +178,12 @@ class Poloniex {
 		$volume = $this->retrieveJSON($this->public_url.'?command=return24hVolume');
 		return $volume;
 	}
+
+	/**
+	 * @param string $pair ALL 
+	 * @return array|mixed
+	 * 
+	 */
 
 	public function get_ticker($pair = "ALL") {
 		$pair = strtoupper($pair);

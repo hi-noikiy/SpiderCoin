@@ -14,9 +14,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\Inspire::class,
-        \App\Console\Commands\OkCoinCommand::class,
         \App\Console\Commands\BDataKlineCommand::class,
         \App\Console\Commands\BDataNowCommand::class,
+        \App\Console\Commands\BDataDepthCommand::class,
+        \App\Console\Commands\BDataTradesCommand::class,
     ];
 
     /**

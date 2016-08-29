@@ -2,16 +2,8 @@
 namespace App\Jobs\BCoin;
 
 class HuoBi {
-	static private $api_key;
-	static private $api_secret;
-
 	const WEB_BASE = "http://api.huobi.com/";
 	const API_BASE = 'staticmarket/';
-
-	public function __construct($api_key, $api_secret) {
-		self::$api_key = $api_key;
-		self::$api_secret = $api_secret;
-	}
 	
 	/**
 	 * 获取火币的kline
@@ -22,7 +14,7 @@ class HuoBi {
 	static public function klineDataApi( $symbol = 'btc' , $period = '001' )
 	{
 		$res = httpRequest( self::WEB_BASE . self::API_BASE . $symbol.'_kline_'.$period.'_json.js', '');
-		return json_decode($res, true);
+		return $res ;
 	}
 	/**
 	 * 获取火币的实时行情
@@ -32,16 +24,15 @@ class HuoBi {
 	static public function tickerApi( $symbol )
 	{
 		$symbol = $symbol == 'btc' ? 'btc' : 'ltc' ;
-		$res = httpRequest( self::WEB_BASE .self::API_BASE.'ticker_'.$symbol.'_json');
-		$tickerData = json_decode($res);
+		$tickerData = httpRequest( self::WEB_BASE .self::API_BASE.'ticker_'.$symbol.'_json');
 		$resData = [
-			'time' 	=> $tickerData->time ,
-			'buy' 	=> $tickerData->ticker-> buy,
-			'high' 	=> $tickerData->ticker-> high,
-			'last' 	=> $tickerData->ticker-> last,
-			'low' 	=> $tickerData->ticker-> low,
-			'sell' 	=> $tickerData->ticker-> sell,
-			'vol' 	=> $tickerData->ticker-> vol,
+			'time' 	=> $tickerData['time'] ,
+			'buy' 	=> $tickerData['ticker']['buy'],
+			'high' 	=> $tickerData['ticker']['high'],
+			'last' 	=> $tickerData['ticker']['last'],
+			'low' 	=> $tickerData['ticker']['low'],
+			'sell' 	=> $tickerData['ticker']['sell'],
+			'vol' 	=> $tickerData['ticker']['vol'],
 			'symbol' 	=> $symbol,
 		];
 		return $resData;
@@ -52,22 +43,35 @@ class HuoBi {
 	 * @param integer $size X表示返回多少条深度数据，可取值 1-150
 	 * @return array
 	 */
-	static public function depthApi( $symbol ,$size = 0)
+	static public function depthApi( $symbol = 'btc' ,$size = 0)
 	{
 		$symbol = $symbol == 'btc' ? 'btc' : 'ltc' ;
-		$size   = !empty($size) ? 'json' : $size ;
-		$res = httpRequest( self::WEB_BASE .self::API_BASE.'depth_'.$symbol.'_'.$size);
-		$tickerData = json_decode($res);
-		$resData = [
-			'date' 	=> $tickerData->time ,
-			'buy' 	=> $tickerData->ticker-> buy,
-			'high' 	=> $tickerData->ticker-> high,
-			'last' 	=> $tickerData->ticker-> last,
-			'low' 	=> $tickerData->ticker-> low,
-			'sell' 	=> $tickerData->ticker-> sell,
-			'vol' 	=> $tickerData->ticker-> vol,
-			'symbol' 	=> $symbol,
-		];
-		return $resData;
+		$size   = empty($size) ? 'json' : $size ;
+		$tickerData = httpRequest( self::WEB_BASE .self::API_BASE.'depth_'.$symbol.'_'.$size);
+		return $tickerData;
+	}
+	/**
+	 * 获取火币买卖盘实时成交数据
+	 * @param string $symbol *       btc ltc
+	 *  	amount: 63165 //成交量
+	 *      level: 86.999 //涨幅
+	 *      buys: Array[10] //买10
+	 *      p_high: 4410 //最高
+	 *      p_last: 4275 &nbsp;//收盘价
+	 *      p_low: 4250 //最低
+	 *      p_new: 4362 //最新
+	 *      p_open: 4275 //开盘
+	 *      sells: Array[10] //卖10
+	 *      top_buy: Array[5] //买5
+	 *      top_sell: Object //卖5
+	 *      total: 273542407.24361 //总量（人民币）
+	 *      trades: Array[15] //实时成交
+	 *      symbol:"btccny" //类型
+	 * @return array
+	 */
+	static public function tradesApi( $symbol = 'btc' )
+	{
+		$symbol = $symbol == 'btc' ? 'btc' : 'ltc' ;
+		return httpRequest( self::WEB_BASE .self::API_BASE.'detail_'.$symbol.'_json')['trades'];
 	}
 }

@@ -1,4 +1,4 @@
-## laravel --- bidingtou
+## laravel --- SpiderCoin
 --------
 
 ### 功能特点
@@ -21,7 +21,7 @@
 
 ### 安装步骤（Installation）
 
-1. git clone https://github.com/ucfyao/laravelbidingtou.git
+1. git clone https://github.com/ucfyao/SpiderCoin.git
 2. cd laravelbidingtou
 3. sudo chmod -R 777 storage/
 4. sudo composer install

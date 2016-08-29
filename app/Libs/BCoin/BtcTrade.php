@@ -41,10 +41,9 @@ class BtcTrade{
 	 */
 	static public function depthApi( $symbol =  'btc' )
 	{
-		$url = self::WEB_BASE.self::API_BASE.'ticker';
+		$url = self::WEB_BASE.self::API_BASE.'depth';
 		!empty($symbol) && $url = $url.'?'.http_build_query(['coin'=>$symbol]);
-		$res = httpRequest( $url );
-		return json_decode($res, true);
+		return httpRequest( $url );
 	}
 	/**
 	 * 获取 BtcTrade 行情（盘口数据）
@@ -56,7 +55,21 @@ class BtcTrade{
 	{
 		$params['coin']  = $symbol =='btc' ? 'btc' : 'ltc';
 		$url = self::WEB_BASE . self::API_BASE . 'ticker';
-		$res = httpRequest( $url , $params );
-		return json_decode($res, true);
+		return httpRequest( $url , $params );
+	}
+
+	/**
+	 * 获取 BtcTrade 历史交易记录
+	 * @param string $symbol	btc,eth,ltc,doge,ybc
+	 * @param int $since 根据记录id返回，默认返回最新的100条交易记录
+	 * @return array
+	 *
+	 */
+	static public function tradesApi( $symbol =  'btc', $since = 0 )
+	{
+		$params['coin']  = $symbol ;
+		!empty($since) && $params['since']  = $since ;
+		$url = self::WEB_BASE . self::API_BASE . 'trades';
+		return httpRequest( $url , $params );
 	}
 }

@@ -50,13 +50,13 @@ class BDataKlineCommand extends Command
         // 获取参数
         $platformName  = $this->argument('platformName');
         $symbol        = $this->argument('symbol');
-//        $type       = $this->argument('type');
+        $type          = $this->argument('type');
         $result = [];
         // 根据平台名称调用不同的接口
         switch ( $platformName ){
             // 获取OKCoin Kline行情
             case 'OkCoin':
-                $client = new OKCoin(new OKCoin_ApiKeyAuthentication( '' , ''));
+                $client = new OKCoin( new OKCoin_ApiKeyAuthentication() );
                 $type   = '1min';
                 $result = $client -> klineDataApi( $symbol ,  $type );
                 break;

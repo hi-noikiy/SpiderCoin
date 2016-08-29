@@ -82,21 +82,7 @@ class OKCoin_Rpc {
 		// Do request
 		$response = $this -> _requestor -> doCurlRequest($ch);
 		// Decode response
-		try {
-			$body = $response['body'];
-			$json = json_decode($body);
-		} catch (\Exception $e) {
-			echo "Invalid response body" . $response['statusCode'] . $response['body'];
-		}
-		if ($json === null) {
-			echo "Invalid response body" . $response['statusCode'] . $response['body'];
-		}
-		if (isset($json -> error)) {
-			throw new OKCoin_Exception($json -> error, $response['statusCode'], $response['body']);
-		} else if (isset($json -> errors)) {
-			throw new OKCoin_Exception(implode($json -> errors, ', '), $response['statusCode'], $response['body']);
-		}
-
+		$json = json_decode( $response['body'] , true );
 		return $json;
 	}
 

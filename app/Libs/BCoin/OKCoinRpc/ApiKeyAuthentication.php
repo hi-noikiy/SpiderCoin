@@ -6,7 +6,7 @@ class OKCoin_ApiKeyAuthentication extends OKCoin_Authentication
     private $_apiKey;
     private $_apiKeySecret;
 
-    public function __construct($apiKey, $apiKeySecret)
+    public function __construct($apiKey = '', $apiKeySecret = '')
     {
         $this->_apiKey = $apiKey;
         $this->_apiKeySecret = $apiKeySecret;

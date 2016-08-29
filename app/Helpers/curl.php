@@ -2,9 +2,11 @@
 if ( ! function_exists('httpRequest')) {
 
     /**
-     *
      * 发送curl请求
-     *
+     * @param string $url
+     * @param array $params
+     * @param string $method
+     * @return array
      */
     function httpRequest( $url , $params = [] ,$method = 'get')
     {
@@ -27,6 +29,6 @@ if ( ! function_exists('httpRequest')) {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $tResult = curl_exec($ch);
         curl_close($ch);
-        return $tResult;
+        return json_decode( $tResult , true );
     }
 }

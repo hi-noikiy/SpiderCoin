@@ -9,34 +9,15 @@ class OKCoinBase {
 	
 //	const WEB_BASE = 'https://www.okcoin.com/';//OKCoin国际站
 	const WEB_BASE = 'https://www.okcoin.cn/';//OKCoin中国站
-	
 	private $_rpc;
 	private $_authentication;
-
 	// This constructor is deprecated.
-	public function __construct($authentication, $tokens = null, $apiKeySecret = null) {
+	public function __construct($authentication, $apiKey = null, $apiKeySecret = null) {
 		// First off, check for a legit authentication class type
 		if ($authentication instanceof OKCoin_Authentication) {
 			$this -> _authentication = $authentication;
 		} else {
-			// Here, $authentication was not a valid authentication object, so
-			// analyze the constructor parameters and return the correct object.
-			// This should be considered deprecated, but it's here for backward compatibility.
-			// In older versions of this library, the first parameter of this constructor
-			// can be either an API key string or an OAuth object.
-			if ($tokens !== null) {
-				$this -> _authentication = new OKCoin_OAuthAuthentication($authentication, $tokens);
-			} else if ($authentication !== null && is_string($authentication)) {
-				$apiKey = $authentication;
-				if ($apiKeySecret === null) {
-					// Simple API key
-					$this -> _authentication = new OKCoin_SimpleApiKeyAuthentication($apiKey);
-				} else {
-					$this -> _authentication = new OKCoin_ApiKeyAuthentication($apiKey, $apiKeySecret);
-				}
-			} else {
-				throw new OKCoin_Exception('Could not determine API authentication scheme');
-			}
+			$this -> _authentication = new OKCoin_ApiKeyAuthentication($apiKey, $apiKeySecret);
 		}
 
 		$this -> _rpc = new OKCoin_Rpc(new OKCoin_Requestor(), $this -> _authentication);

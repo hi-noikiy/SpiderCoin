@@ -21,7 +21,7 @@ class BTCC{
 	 * @param string $sincetype
 	 * 默认返回前一百条
 	 *
-	 * @return json
+	 * @return array
 	 */
 	static public function klineDataApi( $symbol =  'XBTCNY', $limit = 100 , $since = 0, $sincetype = 'id' )
 	{
@@ -35,31 +35,27 @@ class BTCC{
 			$url = $url.'?'.http_build_query($params);
 		}
 		$res = httpRequest( $url );
-		return json_decode($res, true);
+		return $res ;
 	}
 
 	/**
 	 *
 	 * 获取 BTCC 历史交易数据
 	 * @param string $symbol
+	 * @param string $sincetype id time
+	 * @param int $since
 	 * @param int $limit
 	 * @return array
 	 *
 	 */
-	static public function tradesApi( $symbol =  'XBTCNY', $limit = 100 )
+	static public function tradesApi( $symbol =  'btc', $sincetype = 'id' , $since = 0 ,$limit = 100 )
 	{
-
-		$url = self::WEB_BASE.self::API_BASE.'ticker';
-		$params = [];
+		$params['symbol'] = $symbol == 'btc' ? 'XBTCNY' : 'XBTUSD' ;
+		$url = self::WEB_BASE.self::API_BASE.'historydata';
+		!empty($sincetype) && $params['sincetype'] =  $sincetype;
 		!empty($since) && $params['since'] =  $since;
 		!empty($limit) && $params['limit'] =  $limit;
-		!empty($symbol) && $params['symbol'] =  $symbol;
-		!empty($sincetype) && $params['sincetype'] =  $sincetype;
-		if(!empty($params)){
-			$url = $url.'?'.http_build_query($params);
-		}
-		$res = httpRequest( $url );
-		return json_decode($res, true);
+		return  httpRequest( $url ,$params);
 	}
 	/**
 	 * 获取 BTCC 的实时行情
@@ -70,18 +66,32 @@ class BTCC{
 	{
 		$params['symbol'] = $symbol == 'btc' ? 'XBTCNY' : 'XBTUSD' ;
 		$url = self::WEB_BASE . self::API_BASE.'ticker';
-		$res = httpRequest( $url , $params);
-		$tickerData = json_decode($res);
+		$tickerData = httpRequest( $url , $params);
 		$resData = [
-			'time' 	=> floor( $tickerData->ticker-> Timestamp/1000 ),
-			'buy' 	=> $tickerData->ticker-> BidPrice,
-			'high' 	=> $tickerData->ticker-> High,
-			'last' 	=> $tickerData->ticker-> Last,
-			'low' 	=> $tickerData->ticker-> Low,
-			'sell' 	=> $tickerData->ticker-> AskPrice,
-			'vol' 	=> $tickerData->ticker-> Volume,
+			'time' 		=> floor( $tickerData['ticker']['Timestamp']/1000 ),
+			'buy' 		=> $tickerData['ticker']['BidPrice'],
+			'high' 		=> $tickerData['ticker']['High'],
+			'last' 		=> $tickerData['ticker']['Last'],
+			'low' 		=> $tickerData['ticker']['Low'],
+			'sell' 		=> $tickerData['ticker']['AskPrice'],
+			'vol' 		=> $tickerData['ticker']['Volume'],
 			'symbol' 	=> $symbol,
 		];
 		return $resData;
+	}
+	/**
+	 *
+	 * 获取 BTCC 交易深度数据
+	 * @param string $symbol
+	 * @param int $limit
+	 * @return array
+	 *
+	 */
+	static public function depthApi( $symbol =  'btc', $limit = 200 )
+	{
+		$url = self::WEB_BASE.self::API_BASE.'orderbook';
+		$params['limit'] =  $limit;
+		$params['symbol'] = $symbol == 'btc' ? 'XBTCNY' : 'XBTUSD';
+		return  httpRequest( $url ,$params);
 	}
 }

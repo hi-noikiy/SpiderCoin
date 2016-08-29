@@ -29,29 +29,44 @@ class OKCoin extends OKCoinBase {
 		// 格式化返回值
 		$tickerData = $this -> get("/api/v1/ticker.do", $params);
 		$resData = [
-			'time' 	=> $tickerData->date ,
-			'buy' 	=> $tickerData->ticker-> buy,
-			'high' 	=> $tickerData->ticker-> high,
-			'last' 	=> $tickerData->ticker-> last,
-			'low' 	=> $tickerData->ticker-> low,
-			'sell' 	=> $tickerData->ticker-> sell,
-			'vol' 	=> $tickerData->ticker-> vol,
+			'time' 	=> $tickerData['date'] ,
+			'buy' 	=> $tickerData['ticker']['buy'],
+			'high' 	=> $tickerData['ticker']['high'],
+			'last' 	=> $tickerData['ticker']['last'],
+			'low' 	=> $tickerData['ticker']['low'],
+			'sell' 	=> $tickerData['ticker']['sell'],
+			'vol' 	=> $tickerData['ticker']['vol'],
 			'symbol' 	=> $symbol,
 		];
 		return $resData;
 	}
 	
 	//获取OKCoin市场深度
-	public function depthApi($symbol = '' , $size = 0 , $merge = 0 ) {
-		$params = [] ;
-		!empty($symbol) && $params['symbol'] = $symbol;
+	public function depthApi($symbol = 'btc' , $size = 0 , $merge = 0 ) {
+		$params['symbol']  = $symbol =='btc' ? 'btc_cny' : 'ltc_cny';
 		!empty($size) && $params['size'] = $size;
 		!empty($merge) && $params['merge'] = $merge;
 		return $this -> get("/api/v1/depth.do", $params);
 	}
 
-	//获取OKCoin历史交易信息
-	public function tradesApi($params = null) {
+	/**
+	 * 获取OKCoin历史交易信息
+	 * @param string $symbol	btc_cny:比特币 ltc_cny :莱特币
+	 * @param int $since		从某一tid开始访问最近600条数据(非必填项)
+	 *
+	 * 返回值解释
+	 * date:交易时间
+	 * date_ms:交易时间(ms)
+	 * price: 交易价格
+	 * amount: 交易数量
+	 * tid: 交易生成ID
+	 * type: buy/sell
+	 *
+	 * @return mixed
+	 */
+	public function tradesApi( $symbol = 'btc' , $since = 0 ) {
+		$params['symbol']  = $symbol =='btc' ? 'btc_cny' : 'ltc_cny';
+		!empty($since) && $params['since'] = $symbol ;
 		return $this -> get("/api/v1/trades.do", $params);
 	}
 	/**
