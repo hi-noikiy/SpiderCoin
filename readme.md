@@ -19,10 +19,10 @@
 - Laravel : 5.1.*
 - Composer
 
-### 安装步骤（Installation）
+### 开发安装步骤（Installation）
 
 1. git clone https://github.com/ucfyao/SpiderCoin.git
-2. cd laravelbidingtou
+2. cd SpiderCoin
 3. sudo chmod -R 777 storage/
 4. sudo composer install
 5. sudo npm install
@@ -83,6 +83,7 @@
 3.编译前端文件
 
     ```
+    npm install
     gulp --production
 
 4.清理

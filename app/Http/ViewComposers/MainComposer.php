@@ -23,37 +23,12 @@ class MainComposer
             1,2,3
         ];
         $menus = [
-            [
-                'id'            => 1,
-                'name'          => '数据管理',
-                'description'   => '操作管理',
-                'route'         => 1,
-                'parent_id'     => 0,
-                'hide'          => 0,
-                'icon'          => 12,
-                'type'          => 12,
-            ], [
-                'id'            => 2,
-                'name'          => '用户管理',
-                'description'   => '操作管理',
-                'route'         => 2,
-                'parent_id'     => 0,
-                'hide'          => 0,
-                'icon'          => 12,
-                'type'          => 12,
-            ], [
-                'id'            => 3,
-                'name'          => '系统管理',
-                'description'   => 3,
-                'route'         => 3,
-                'parent_id'     => 1,
-                'hide'          => 0,
-                'icon'          => 12,
-                'type'          => 12,
-            ],
+            ['id'=>1,'name'=>'数据管理','description'=>'操作管理','route'=>1,'parent_id'=>0,'hide'=>0,'icon'=>12,'type'=>12],
+            ['id'=>2,'name'=>'用户管理','description'=>'操作管理','route'=>2,'parent_id'=>0,'hide'=>0,'icon'=>12,'type'=>12],
+            ['id'=>3,'name'=>'系统管理','description'=>3,'route'=> 3,'parent_id'=>1,'hide'=> 0,'icon'=> 12,'type'=> 12,],
         ];
         $title = $this->getPageDescriptionArrayByMenus($menus);
-        $view->with(compact('menus', 'route', 'title'));
+        $view->with( compact('menus', 'route', 'title') );
     }
 
     private function getPageDescriptionArrayByMenus($menus)
