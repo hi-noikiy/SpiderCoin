@@ -11,9 +11,23 @@ class HuoBi {
 	 * @param string $period	001  1分钟线 005 5分钟
 	 * @return array
 	 */
-	static public function klineDataApi( $symbol = 'btc' , $period = '001' )
+	static public function klineDataApi( $symbol = 'btc' , $period = '1min' )
 	{
-		$res = httpRequest( self::WEB_BASE . self::API_BASE . $symbol.'_kline_'.$period.'_json.js', '');
+		switch ( $period ){
+			case '1min' :
+				$inPeriod = '001';
+				break;
+			case '5min' :
+				$inPeriod = '005';
+				break;
+			case '1min' :
+				$inPeriod = '001';
+				break;
+			default :
+				$inPeriod = '001';
+				break;
+		}
+		$res = httpRequest( self::WEB_BASE . self::API_BASE . $symbol.'_kline_'.$inPeriod.'_json.js', '');
 		return $res ;
 	}
 	/**

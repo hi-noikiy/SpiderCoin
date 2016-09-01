@@ -2,6 +2,7 @@
 namespace App\Jobs\BCoin;
 
 use App\Jobs\BCoin\OKCoinRpc\OKCoinBase;
+use Carbon\Carbon;
 
 class OKCoin extends OKCoinBase {
 
@@ -75,7 +76,7 @@ class OKCoin extends OKCoinBase {
 	 * @param  string $type k线类型 1min : 1分钟 3min : 3分钟 5min : 5分钟 15min : 15分钟 30min : 30分钟 1day : 1日 3day : 3日 1week : 1周 1hour : 1小时 2hour : 2小时 4hour : 4小时 6hour : 6小时 12hour : 12小时
 	 * @param  integer $size 指定获取数据的条数
 	 * @param  int $since 时间戳（eg：1417536000000）。 返回该时间戳以后的数据
-	 *
+	 * 1417536000000
 	 * 返回值说明
 	 * [
 	 * 		1417536000000,	时间戳
@@ -87,11 +88,11 @@ class OKCoin extends OKCoinBase {
 	 * ]
 	 * @return mixed
 	 */
-	public function klineDataApi($symbol ='btc', $type = '1min', $size = 0 , $since = 0) {
+	public function klineDataApi($symbol ='btc', $type = '1min', $size = 1440 , $since = 0) {
 		$params['symbol']  = $symbol =='btc' ? 'btc_cny' : 'ltc_cny';
 		!empty($type) && $params['type'] = $type;
 		!empty($size) && $params['size'] = $size;
-		!empty($since) && $params['since'] = $since;
+		$params['since'] = empty($since) ? strtotime( Carbon::yesterday()->startOfDay() )* 1000 : $since;
 		return $this -> get("/api/v1/kline.do", $params);
 	}
 	

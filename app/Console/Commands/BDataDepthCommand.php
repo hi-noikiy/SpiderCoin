@@ -53,24 +53,24 @@ class BDataDepthCommand extends Command
         $result = [];
         // 根据平台名称调用不同的接口
         switch ( $platformName ){
-            // 获取 OKCoin 行情
+            // 获取 OKCoin 深度
             case 'OkCoin':
                 $client = new OKCoin(new OKCoin_ApiKeyAuthentication());
                 $result = $client -> depthApi( $symbol );
                 break;
-            // 获取 OKCoin 行情
+            // 获取 HuoBi 深度
             case 'HuoBi':
                 $result = HuoBi::depthApi( $symbol );
                 break;
-            // 获取 比特币交易网 行情
+            // 获取 比特币交易网 深度
             case 'BtcTrade':
                 $result = BtcTrade::depthApi( $symbol );
                 break;
-            // 获取 BTCC 行情
+            // 获取 BTCC 深度
             case 'BTCC':
                 $result = BTCC::depthApi( $symbol );
                 break;
-            // 获取 P网 行情
+            // 获取 P网 深度
             case 'Poloniex':
                 $poloniex =  new Poloniex();
                 $symbol = 'ALL';
