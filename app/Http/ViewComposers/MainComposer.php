@@ -17,17 +17,15 @@ class MainComposer
      */
     public function compose(View $view)
     {
-//        $route = Route::currentRouteName();
+        $route = Route::currentRouteName();
 //        $menus = MenuRepository::getAllDisplayMenus();
-        $route = [
-            '/','/','/'
-        ];
+
         $menus = [
             // 主管理模块
-            ['id'=>1,'name'=>'数据管理','description'=>'操作管理','route'=>'/','parent_id'=>0,'hide'=>0,'icon'=>12,'type'=>12],
-            ['id'=>5,'name'=>'数据管理','description'=>'操作管理','route'=>'/','parent_id'=>3,'hide'=>0,'icon'=>12,'type'=>12],
-            ['id'=>2,'name'=>'用户管理','description'=>'操作管理','route'=>'/','parent_id'=>0,'hide'=>0,'icon'=>12,'type'=>12],
-            ['id'=>3,'name'=>'系统管理','description'=>3,'route'=> '/','parent_id'=>1,'hide'=> 0,'icon'=> 12,'type'=> 12,],
+            ['id'=>1,'name'=>'dingtou.menu.group','description'=>'操作管理','route'=>'backend.index','parent_id'=>0,'hide'=>0,'icon'=>12,'sort'=>12],
+//            ['id'=>5,'name'=>'dingtou.menu.group','description'=>'操作管理','route'=>'backend.menu','parent_id'=>3,'hide'=>0,'icon'=>12,'sort'=>12],
+            ['id'=>2,'name'=>'dingtou.menu.group','description'=>'操作管理','route'=>'backend.index','parent_id'=>1,'hide'=>0,'icon'=>12,'sort'=>12],
+//            ['id'=>3,'name'=>'dingtou.menu.group','description'=>3,'route'=> 'backend.menu','parent_id'=>1,'hide'=> 0,'icon'=> 12,'sort'=> 12,],
 
             // 二级模块
 
