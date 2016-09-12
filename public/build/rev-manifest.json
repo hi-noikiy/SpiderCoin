@@ -1,4 +1,6 @@
 {
   "assets/backend/css/app.min.css": "assets/backend/css/app.min-44774d4e8f.css",
-  "assets/backend/js/app.min.js": "assets/backend/js/app.min-915ae4f66f.js"
+  "assets/backend/js/app.min.js": "assets/backend/js/app.min-915ae4f66f.js",
+  "assets/frontend/css/app.min.css": "assets/frontend/css/app.min-742ac04ca0.css",
+  "assets/frontend/js/app.min.js": "assets/frontend/js/app.min-8173de2926.js"
 }

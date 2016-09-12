@@ -1,6 +1,6 @@
 var elixir = require('laravel-elixir');
 
-elixir(function(mix) {
+elixir(function(mix)  {
     // jQuery
     mix.copy('node_modules/jquery/dist/jquery.min.js', 'resources/assets/backend/js/');
 
@@ -8,6 +8,8 @@ elixir(function(mix) {
     mix.copy('node_modules/bootstrap/dist/js/bootstrap.min.js', 'resources/assets/backend/js/');
     mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css', 'resources/assets/backend/css/');
     mix.copy('node_modules/bootstrap/dist/fonts/', 'public/assets/backend/fonts/');
+    mix.copy('node_modules/bootstrap/dist/fonts/', 'public/assets/frontend/fonts/');
+    mix.copy('node_modules/bootstrap/fonts/', 'public/build/assets/frontend/fonts/');
 
     // AdminLTE
     mix.copy('node_modules/admin-lte/dist/img/', 'public/assets/backend/images/');
@@ -25,6 +27,7 @@ elixir(function(mix) {
     // Font-Awesome
     mix.copy('node_modules/font-awesome/css/font-awesome.min.css', 'resources/assets/backend/css/');
     mix.copy('node_modules/font-awesome/fonts/', 'public/build/assets/backend/fonts/');
+    mix.copy('node_modules/font-awesome/fonts/', 'public/build/assets/frontend/fonts/');
 
     // Login Background Images
     mix.copy('resources/assets/images/background/', 'public/assets/backend/images/background/');
@@ -40,7 +43,7 @@ elixir(function(mix) {
     mix.copy("node_modules/dropzone/dist/min/dropzone-amd-module.min.js","public/assets/backend/plugins/dropzone/");
 
 
-    // 合并指定文件夹的CSS样式文件
+    // 合并后台指定文件夹的CSS样式文件
     mix.styles([
             'select2.min.css',
             'daterangepicker-bs3.css',
@@ -54,8 +57,20 @@ elixir(function(mix) {
         'public/assets/backend/css/app.min.css',
         'resources/assets/backend/css'
     );
+    // 合并前台指定文件夹的CSS样式文件
+    mix.styles([
+            'select2.min.css',
+            'daterangepicker-bs3.css',
+            'bootstrap.min.css',
+            'font-awesome.min.css',
+            'sweetalert.css',
+            'common.css'
+        ],
+        'public/assets/frontend/css/app.min.css',
+        'resources/assets/backend/css'
+    );
 
-    // 合并指定文件夹的Javascript脚本文件
+    // 合并后台指定文件夹的Javascript脚本文件
     mix.scripts([
             'jquery.min.js',
             'bootstrap.min.js',
@@ -67,6 +82,19 @@ elixir(function(mix) {
             'common.js'
         ],
         'public/assets/backend/js/app.min.js',
+        'resources/assets/backend/js'
+    );
+    // 合并前台指定文件夹的Javascript脚本文件
+    mix.scripts([
+            'jquery.min.js',
+            'bootstrap.min.js',
+            'moment.min.js',
+            'daterangepicker.js',
+            'select2.full.min.js',
+            'sweetalert.min.js',
+            'common.js'
+        ],
+        'public/assets/frontend/js/app.min.js',
         'resources/assets/backend/js'
     );
 
@@ -82,5 +110,10 @@ elixir(function(mix) {
     });
 
     // 生成版本和缓存清除
-    mix.version(['assets/backend/js/app.min.js', 'assets/backend/css/app.min.css']);
+    mix.version([
+        'assets/backend/js/app.min.js',
+        'assets/backend/css/app.min.css',
+        'assets/frontend/js/app.min.js',
+        'assets/frontend/css/app.min.css'
+    ]);
 });

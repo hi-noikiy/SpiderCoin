@@ -32,11 +32,11 @@ return [
     /* 无需验证的操作 */
     'without-verification-actions' => [
         'Closure',
-        'App\Http\Controllers\Auth\AuthController@getLogin',
-        'App\Http\Controllers\Auth\AuthController@postLogin',
-        'App\Http\Controllers\Auth\AuthController@getLogout',
-        'App\Http\Controllers\Auth\AuthController@getRegister',
-        'App\Http\Controllers\Auth\AuthController@postRegister',
+//        'App\Http\Controllers\Auth\AuthController@getLogin',
+//        'App\Http\Controllers\Auth\AuthController@postLogin',
+//        'App\Http\Controllers\Auth\AuthController@getLogout',
+//        'App\Http\Controllers\Auth\AuthController@getRegister',
+//        'App\Http\Controllers\Auth\AuthController@postRegister',
         'Barryvdh\Debugbar\Controllers\OpenHandlerController@handle',
         'Barryvdh\Debugbar\Controllers\OpenHandlerController@clockwork',
         'Barryvdh\Debugbar\Controllers\AssetController@css',

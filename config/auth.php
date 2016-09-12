@@ -61,14 +61,14 @@ return [
     'multi-auth' => [
         'admin' => [
             'driver' => 'eloquent',
-            'model'  => App\Admin::class
+            'model'  => App\Models\Admin::class
         ],
         'user' => [
             'driver' => 'eloquent',
-            'model'  => App\User::class
+            'model'  => App\Models\User::class
         ]
     ],
-    
+
     'password' => [
         'email'  => 'emails.password',
         'table'  => 'password_resets',

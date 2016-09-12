@@ -114,7 +114,7 @@
                                 <a href="https://github.com/ucfyao" class="btn btn-default btn-flat">Star</a>
                             </div>
                             <div class="pull-right">
-                                <a href="/auth/logout" class="btn btn-default btn-flat">退出登录</a>
+                                <a href="/backend/auth/logout" class="btn btn-default btn-flat">退出登录</a>
                             </div>
                         </li>
                     </ul>

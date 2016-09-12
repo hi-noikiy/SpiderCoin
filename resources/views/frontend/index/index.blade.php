@@ -62,9 +62,8 @@
                 </div>
                 <div class="social-media hidden-sm hidden-xs">
                     <ul class="nav navbar-nav">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="/auth/login"> 登录 </a></li>
+                        <li><a href="/auth/register"> 注册 </a></li>
                     </ul>
                 </div>
             </div>

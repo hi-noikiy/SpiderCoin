@@ -1,4 +1,5 @@
 <?php
+
 /* 后台首页 */
 Route::get('/', [
     'as'   => 'backend.index',

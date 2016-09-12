@@ -20,8 +20,8 @@ class UsersTableSeeder extends Seeder
             0 =>
                 [
                     'id'             => 1,
-                    'name'           => 'Admin',
-                    'email'          => 'admin@dingtou.com',
+                    'name'           => 'Admin2',
+                    'email'          => 'admin2@dingtou.com',
                     'password'       => bcrypt('123456'),
                     'remember_token' => bcrypt('123456'),
                     'created_at'     => '2016-05-19 09:52:51',

@@ -30,7 +30,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer($this->userInfo, function ($view) {
-            $userInfo = \Auth::user();
+            $userInfo = \Auth::admin()->get();
             $view->with(compact('userInfo'));
         });
 
