@@ -11,14 +11,18 @@
     </div>
     <div class="collapse navbar-collapse" id="yw5">
         <ul id="yw3" class="nav navbar-nav" role="menu">
-            <li><a tabindex="-1" href="/index.php">定投</a></li>
-            <li><a tabindex="-1" href="/index.php?r=grid">网格</a></li>
+            <li><a tabindex="-1" href="/dingtou">定投</a></li>
+            <li><a tabindex="-1" href="/grid">网格</a></li>
             <li><a tabindex="-1" href="/index.php?r=aipTest">回测</a></li>
-            <li><a tabindex="-1" href="/index.php?r=market">市场</a></li>
+            <li><a tabindex="-1" href="/market">市场</a></li>
         </ul>
         <ul id="yw4" class="navbar-right nav navbar-nav" role="menu">
             <li visible="1" class="pull-right">
-                <a tabindex="-1" href="/index.php?r=logout">Logout (ucfyao)</a>
+                @if ( !empty( $userInfo['name'] ) )
+                    <a tabindex="-1" href="/frontend/auth/logout"> Logout ({{ $userInfo['name']}})</a>
+                @else
+                    <a tabindex="-1" href="/frontend/auth/login"> Login </a>
+                @endif
             </li>
         </ul>
     </div>
