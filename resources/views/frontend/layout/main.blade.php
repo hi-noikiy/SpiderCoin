@@ -16,7 +16,7 @@
 <body>
 @include('frontend.layout.header')
 
-<div class="container-fluid">
+<div class="container">
     <div class="content-wrapper">
         <section class="content-header">
             @include('frontend.layout.errors')
