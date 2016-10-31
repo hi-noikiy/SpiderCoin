@@ -60,9 +60,9 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' =>md5($data['username'].$data['password']),
         ]);
     }
     /**
@@ -85,9 +85,28 @@ class AuthController extends Controller
             return $this->sendLockoutResponse($request);
         }
         $credentials = ['email' => $request->input('email'), 'password' => $request->input('password')];
-        if (Auth::user()->attempt($credentials, $request->has('remember'))) {
-            return redirect()->intended($this->redirectPath());
+        // 查询出密码
+        $user = User::where('email',$credentials['email'])->first();
+        if(empty($user )){
+            return redirect($request->Path())
+                ->withInput($request->only($this->loginUsername(), 'remember'))
+                ->withErrors([
+                 'email'=> '用户不存在'
+                ]);
         }
+        // 如果是老用户,重置密码加密模式
+
+        // If an implementation of UserInterface was returned, we'll ask the provider
+        // to validate the user against the given credentials, and if they are in
+        // fact valid we'll log the users into the application and return true.
+        if ( $user['password'] === md5($user['username'].$request->input('password'))) {
+//            Auth::user()->login($this->create($request->all()));
+            Auth::user()->login($user, $request->has('remember'));
+            return redirect('/dingtou');
+        }
+//        if (Auth::attempt($credentials, $request->has('remember'))) {
+//            return redirect()->intended($this->redirectPath());
+//        }
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.

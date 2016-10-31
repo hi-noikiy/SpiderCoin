@@ -14,6 +14,7 @@ elixir(function(mix)  {
     // DataTables
     mix.copy('node_modules/datatables.net/js/jquery.dataTables.js', 'resources/assets/js/');
     mix.copy('node_modules/datatables.net-dt/css/jquery.dataTables.css', 'resources/assets/css/');
+    mix.copy('node_modules/datatables.net-dt/images/', 'public/build/assets/frontend/images/');
 
     // AdminLTE
     mix.copy('node_modules/admin-lte/dist/img/', 'public/assets/backend/images/');
@@ -84,7 +85,6 @@ elixir(function(mix)  {
             'daterangepicker.js',
             'adminlte.min.js',
             'sweetalert.min.js',
-            'jquery.dataTables.js',
             'common.js'
         ],
         'public/assets/backend/js/app.min.js',
@@ -98,6 +98,7 @@ elixir(function(mix)  {
             'daterangepicker.js',
             'select2.full.min.js',
             'sweetalert.min.js',
+            'jquery.dataTables.js',
             'common.js'
         ],
         'public/assets/frontend/js/app.min.js',

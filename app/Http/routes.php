@@ -16,12 +16,18 @@ Route::group(['namespace' => 'Frontend\Auth'], function () {
     require_once __DIR__ . '/Routes/frontendAuth.php';
 });
 
+Route::get('/', [
+    'as'   => 'frontend.index.index',
+    'uses' => 'Frontend\IndexController@index'
+]);
 /* 前端管理模块 */
-Route::group(['namespace' => 'Frontend'], function () {
-    Route::get('/', [
-        'as'   => 'frontend.index.index',
-        'uses' => 'IndexController@index'
-    ]);
+Route::group([
+    'middleware' => [
+        'frontend.auth'
+    ],
+    'namespace' => 'Frontend'
+], function () {
+
     require_once __DIR__ . '/Routes/frontend.php';
 });
 

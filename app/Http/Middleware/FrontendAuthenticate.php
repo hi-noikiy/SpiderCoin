@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Auth;
 
 class FrontendAuthenticate
 {
@@ -20,9 +21,9 @@ class FrontendAuthenticate
      * @param  Guard  $auth
      * @return void
      */
-    public function __construct(Guard $auth)
+    public function __construct()
     {
-        $this->auth = $auth;
+        $this->auth = Auth::user();
     }
 
     /**
