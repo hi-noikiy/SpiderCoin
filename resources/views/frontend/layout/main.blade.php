@@ -17,7 +17,7 @@
 @include('frontend.layout.header')
 
 <div class="container">
-    <div class="content-wrapper">
+    <div class="">
         <section class="content-header">
             @include('frontend.layout.errors')
             @include('frontend.layout.success')

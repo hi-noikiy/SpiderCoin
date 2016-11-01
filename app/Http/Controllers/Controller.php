@@ -19,9 +19,9 @@ abstract class Controller extends BaseController
      *
      * @return mixed
      */
-    public function successRoutTo($route,$parameters = [], $message)
+    public function successRoutTo($route, $message)
     {
-        return redirect()->route($route , $parameters)->withSuccess($message);
+        return redirect()->route($route)->withSuccess($message);
     }
 
     /**

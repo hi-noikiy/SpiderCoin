@@ -21,37 +21,32 @@ class AipBillController extends Controller
     public function index( $aipId , Request $request)
     {
         try{
-            $total_btc = 0;
-            $total_cny = 0;
-            // TODO 获取当前登录的用户
+            // 获取当前登录的用户
             $uid = Auth::user()->id();
 
             // 获取用户定投表单数据
             $aipData = AipModel::find($aipId);
             // 初始化模型
-            $aipBillModel = AipOrdersModel::where('aip_id',$aipId)
-                -> where('uid', $uid );
+            $aipBillModel = AipOrdersModel::where('aip_id',$aipId);
+//                -> where('uid', $uid );
 
             // 获取用户的定投账单
             $aipBillData = $aipBillModel -> orderBy('create_at','desc')
-                -> get();
+                ->paginate( 100 );
             // 获取用户定投总和
             $total_btc = $aipBillModel->where('status',2)->sum('deal_amount');
             $total_cny = $aipBillModel->where('status',2)->sum('deal_cny_amount');
             // 获取现在价格
             $tickerData = TickerModel::where('mid',1)
                 ->where('symbol',$aipData->currency)
-                ->orderBy('data','desc')
-                ->take(1)
-                ->get();
-
+                ->orderBy('date','desc')
+                ->first();
             $real_cny = !empty($total_btc) ?  round($tickerData->buy * $total_btc,2) : 0;
-
-            return view('frontend.dingtou.bill',compact('dList','pList','sList'));
+            return view('frontend.dingtouBill.index',compact('aipData','aipBillData','tickerData','real_cny','total_btc','total_cny'));
         }catch (\Exception $e ){
             $resData['code']    = $e->getCode();
             $resData['msg']     = $e->getMessage();
-            return view('frontend.dingtou.index')->withErrors( $resData['msg'] );
+            return view('frontend.dingtouBill.index')->withErrors( $resData['msg'] );
         }
     }
 
@@ -62,10 +57,6 @@ class AipBillController extends Controller
      */
     public function create()
     {
-        // TODO 查询出用户授权key
-
-        // 进入定投创建页面
-        return view('frontend.dingtou.create');
     }
 
     /**

@@ -68,6 +68,8 @@ elixir(function(mix)  {
             'daterangepicker.css',
             'bootstrap.min.css',
             'font-awesome.min.css',
+            'adminlte.min.css',
+            'adminlte-skin.min.css',
             'sweetalert.css',
             'jquery.dataTables.css',
             'common.css'
@@ -113,7 +115,7 @@ elixir(function(mix)  {
             'resources/views/**/*'
         ],
         port: 5000,
-        proxy: '127.0.0.1:1028'
+        proxy: '127.0.0.1:1029'
     });
 
     // 生成版本和缓存清除

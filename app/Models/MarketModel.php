@@ -4,29 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-/**
- * This is the model class for table "user_market".
- *
- * The followings are the available columns in table 'user_market':
- * @property string $id
- * @property string $uid
- * @property string $mid
- * @property string $key
- * @property string $secret
- * @property string $create_at
- * @property string $desc
- *
- * The followings are the available model relations:
- * @property User $u
- */
-class UserMarketModel extends Model
+
+class MarketModel extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'user_market';
+    protected $table = 'market';
 
     /**
      * The attributes that are mass assignable.
@@ -34,11 +20,10 @@ class UserMarketModel extends Model
      * @var array
      */
     protected $fillable = [
-        'uid',      // 用户id
-        'mid',      // 市场
-        'key',      // 密key
-        'secret',   // 秘钥
-        'desc',     // 描述
+        'id'  , //'ID',
+        'name', //'Name',
+        'desc', //'Desc',
+        'url',  //'Url',
     ];
 
     /**
@@ -52,8 +37,16 @@ class UserMarketModel extends Model
         return 'U';
     }
     public $timestamps = false;
-
 //    use SoftDeletes;
 //    protected $dates = ['deleted_at'];
-    
+    public static function getMarketName( $id = 1,$type = 'ONE'){
+        $marketData = [
+            1 => 'okcoin.cn',
+            2 => 'okcoin.com'
+        ];
+        if ($type == 'ALL'){
+            return $marketData;
+        }
+        return !empty( $marketData[$id]) ?  $marketData[$id] : '未命名';
+    }
 }

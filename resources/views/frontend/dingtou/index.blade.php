@@ -30,14 +30,14 @@
                                     <td>{{$item->per_amount}}</td>
                                     <td>{{$item->stop_profit_percentage}}</td>
                                     <td>{{$item->currency}}</td>
-                                    <td>{{ is_null($item->create_at)? "" : date("Y-m-d H:i", $item->create_at) }}</td>
+                                    <td>{{ is_null( $item->create_at )? "" : date("Y-m-d H:i", $item->create_at) }}</td>
                                     <td>{{ $item->used_cny_amount }}</td>
                                     <td>{{ $item->profit }}</td>
                                     <td>{{ $item->total_btc }}</td>
                                     <td>{{ $item->used_cny_amount == 0 ? 0 : round($item->profit/$item->used_cny_amount * 100 , 2) }}</td>
                                     <td class="button-column">
                                         <a class="view" data-title="查看" title="" data-toggle="tooltip" href="{{ route('dingtou.bill' , ['id'=> $item->id] )}} " data-original-title="查看"><span class="glyphicon glyphicon-eye-open"></span></a>
-                                        <a class="update" data-title="更新" title="" data-toggle="tooltip" href="{{route('dingtou.edit' , ['id'=> $item->id] )}} }}" data-original-title="更新"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a class="update" data-title="更新" title="" data-toggle="tooltip" href="{{route('dingtou.edit', ['id'=> $item->id] )}} " data-original-title="更新"><span class="glyphicon glyphicon-pencil"></span></a>
                                     </td>
                                 </tr>
                             @endforeach
