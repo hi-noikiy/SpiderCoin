@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\BDataNowCommand::class,
         \App\Console\Commands\BDataDepthCommand::class,
         \App\Console\Commands\BDataTradesCommand::class,
+        \App\Console\Commands\DingTouInspectionCommand::class,
+        \App\Console\Commands\DingTouStartCommand::class,
     ];
 
     /**

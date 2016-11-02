@@ -11,14 +11,15 @@ use App\Models\AipOrdersModel;
 use App\Models\TickerModel;
 use Illuminate\Console\Command;
 use Log;
-class DingTouCommand extends Command
+
+class DingTouStartCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'DingTou:start';
+    protected $signature = 'dingtou:start';
 
     /**
      * The console command description.

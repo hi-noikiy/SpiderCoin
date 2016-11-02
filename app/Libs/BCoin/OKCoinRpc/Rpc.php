@@ -69,9 +69,12 @@ class OKCoin_Rpc {
 		curl_setopt($ch, CURLOPT_URL, substr(OKCoinBase::WEB_BASE, 0, -1) . $url);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_CAINFO, '../ssl/www.okcoin.cn.cer');
+//		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+//		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+//		curl_setopt($ch, CURLOPT_CAINFO, '../ssl/www.okcoin.cn.cer');
 
 		// $curlOpts[CURLOPT_URL] = substr(OKCoinBase::WEB_BASE, 0, -1) . $url;
 		// $curlOpts[CURLOPT_HTTPHEADER] = $headers;

@@ -16,7 +16,10 @@ return [
     */
 
     'driver' => env('MAIL_DRIVER', 'smtp'),
-
+    'mailgun' => [
+        'domain' => 'your-mailgun-domain',
+        'secret' => 'your-mailgun-key',
+    ],
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Address
@@ -54,7 +57,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'xuyang@sfards.com', 'name' => 'xuyang'],
 
     /*
     |--------------------------------------------------------------------------
