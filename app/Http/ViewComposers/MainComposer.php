@@ -18,18 +18,22 @@ class MainComposer
     public function compose(View $view)
     {
         $route = Route::currentRouteName();
-        $menus = MenuRepository::getAllDisplayMenus();
+//        $menus = MenuRepository::getAllDisplayMenus();
 
-//        $menus = [
-//            // 主管理模块
-//            ['id'=>1,'name'=>'dingtou.menu.group','description'=>'操作管理','route'=>'backend.index','parent_id'=>0,'hide'=>0,'icon'=>12,'sort'=>12],
-////            ['id'=>5,'name'=>'dingtou.menu.group','description'=>'操作管理','route'=>'backend.menu','parent_id'=>3,'hide'=>0,'icon'=>12,'sort'=>12],
-//            ['id'=>2,'name'=>'dingtou.menu.group','description'=>'操作管理','route'=>'backend.index','parent_id'=>1,'hide'=>0,'icon'=>12,'sort'=>12],
-////            ['id'=>3,'name'=>'dingtou.menu.group','description'=>3,'route'=> 'backend.menu','parent_id'=>1,'hide'=> 0,'icon'=> 12,'sort'=> 12,],
-//
-//            // 二级模块
-//
-//        ];
+        $menus = [
+            // 数据概览
+            ['id'=>1,'name'=>'dingtou.index.index','description'=>'数据概览','route'=>'backend.index','parent_id'=>0,'hide'=>0,'icon'=>'fa fa-tachometer','sort'=>1],
+            ['id'=>11,'name'=>'dingtou.index.index','description'=>'数据概览','route'=>'backend.index','parent_id'=>1,'hide'=>0,'icon'=>'fa fa-tachometer','sort'=>11],
+
+            // 钱包管理
+            ['id'=>2,'name'=>'dingtou.wallet.group','description'=>'钱包管理','route'=>'backend.wallet.group','parent_id'=>0,'hide'=>0,'icon'=>'fa fa-btc','sort'=>2],
+            ['id'=>21,'name'=>'dingtou.wallet.list','description'=>'账单查询','route'=>'backend.wallet.info','parent_id'=>2,'hide'=>0,'icon'=>'fa fa-search','sort'=>21],
+
+            // 用户管理
+            ['id'=>3,'name'=>'dingtou.user.group','description'=>'用户管理','route'=>'backend.user.group','parent_id'=>0,'hide'=>0,'icon'=>'fa fa-user','sort'=>3],
+            ['id'=>31,'name'=>'dingtou.user.list','description'=>'用户查询','route'=>'backend.user.bill','parent_id'=>3,'hide'=>0,'icon'=>'fa fa-search','sort'=>41],
+
+        ];
         $title = $this->getPageDescriptionArrayByMenus($menus);
         $view->with( compact('menus', 'route', 'title') );
     }
