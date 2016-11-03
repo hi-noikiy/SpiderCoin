@@ -19,6 +19,7 @@ class MarketController extends Controller
      */
     public function index( Request $request)
     {
+        var_dump(111);die;
         // 查看key列表
         $uid = Auth::user()->id();
         $marketData = UserMarketModel::where('uid',$uid)->get();

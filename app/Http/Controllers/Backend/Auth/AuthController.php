@@ -25,6 +25,7 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    private  $redirectAfterLogout = '/backend';
     /**
      * Create a new authentication controller instance.
      *
@@ -32,7 +33,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('backend.guest', ['except' => 'getLogout']);
     }
 
     /**
@@ -115,6 +116,17 @@ class AuthController extends Controller
     public function getRegister()
     {
         return view('backend.auth.register');
+    }
+    /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLogout()
+    {
+        Auth::admin()->logout();
+
+        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
     }
 
 }

@@ -18,6 +18,7 @@ class Authorize
      */
     public function handle($request, Closure $next)
     {
+        var_dump(111);die;
         /* 判断当前用户是否登录或缓存是否过期 */
         $user = Auth::user();
         if ( ! $user) {
