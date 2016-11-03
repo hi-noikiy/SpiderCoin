@@ -45,7 +45,6 @@ class DingTouStartCommand extends Command
      */
     public function handle()
     {
-
         echo "==========DingtouCommand index".PHP_EOL;
         $starttime = time();
 //		sleep(5);
@@ -71,11 +70,9 @@ class DingTouStartCommand extends Command
                     foreach ( $days as $d){
                         if($d == $time['mday'] && intval($aip->hour) == $time['hours'] ){
                             $this->buy($aip);
-
                         }
                     }
                 }
-
             }
         }catch(OKCoin_Exception $e){
             echo "=== DingtouCommand END with exception:".($e->getMessage()).PHP_EOL;
@@ -202,12 +199,12 @@ class DingTouStartCommand extends Command
         $total_cny = $orderModel->sum("deal_cny_amount");
         $total_per_amount = $orderModel->sum("price");
         $ticker = TickerModel::where('mid',1)->where('symbol',$aip->currency)->orderBy("date",'desc')->first();
-        Log::error("===".var_export($order,true));
-        if(!$order || $total_per_amount == 0){
+        Log::error("===".' total_btc: '.$total_btc . ', total_cny: '. $total_cny .' ,$total_per_amount:'.$total_per_amount);
+        if($total_per_amount == 0){
             return $aip->per_amount;
         }else{
             $real_cny = round($ticker->buy * $total_btc,2);
-            Log::error("===real_cny:".$real_cny);
+            Log::error("=== real_cny:".$real_cny);
             Log::error("=== total_per_amount:". $total_per_amount);
             $amount = $aip->per_amount * ($aip->order_count+1) - $real_cny;
             if($amount > $aip->per_amount * 5){

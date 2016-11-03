@@ -39,7 +39,7 @@ class MarketModel extends Model
     public $timestamps = false;
 //    use SoftDeletes;
 //    protected $dates = ['deleted_at'];
-    public static function getMarketName( $id = 1,$type = 'ONE'){
+    public static function getMarketName( $id = 1,$type = 'ALL'){
         $marketData = [
             1 => 'okcoin.cn',
             2 => 'okcoin.com'

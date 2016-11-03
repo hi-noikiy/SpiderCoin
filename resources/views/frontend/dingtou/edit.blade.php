@@ -145,8 +145,12 @@
                         <label class="col-sm-2 control-label" for="Aip_keyid">市场授权KEY</label>
                         <div class="col-sm-8">
                             <span id="Aip_keyid">
-                                <input class="col-sm-2 control-label" id="Aip_keyid_0" value="25" type="radio" name="keyid">
-                                <label for="Aip_keyid_0">okcoin.cn|定投|d97085b4-f727-480b-b0fc-2fe7cd5a252f</label>
+                                @foreach( $userMarketData as $item )
+                                    <input class="col-sm-2 control-label" id="Aip_keyid_{{ $item['id'] }}" value="{{ $item['id'] }}" {{  $aipData['keyid'] == $item['id']  ? 'checked' : '' }} type="radio" name="keyid">
+                                    <label for="Aip_keyid_{{ $item['id'] }}">
+                                            {{ $marketData[$item['mid']] .'|'.$item['desc'].'|'.$item['key'] }}
+                                        </label><br>
+                                @endforeach
                             </span>
                         </div>
                     </div>

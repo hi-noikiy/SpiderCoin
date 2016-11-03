@@ -6,6 +6,7 @@ use App\Jobs\BCoin\OKCoin;
 use App\Jobs\BCoin\OKCoinRpc\OKCoin_ApiKeyAuthentication;
 use App\Jobs\BCoin\OKCoinRpc\OKCoin_Exception;
 use App\Models\AipModel;
+use App\Models\MarketModel;
 use App\Models\UserMarketModel;
 use Illuminate\Http\Request;
 use Auth;
@@ -61,10 +62,16 @@ class AipController extends Controller
      */
     public function create()
     {
-        // TODO 查询出用户授权key
-
+        // 获取市场key
+        $uid = Auth::user()->id();
+        $userMarketData = UserMarketModel::where('uid',$uid)->get();
+        // 如果还没有创建市场key,返回错误
+        if(empty( $userMarketData )){
+            return $this->errorBackTo("<a href='/market/create'>请创建市场key!</a>");
+        }
+        $marketData = MarketModel::getMarketName();
         // 进入定投创建页面
-        return view('frontend.dingtou.create');
+        return view('frontend.dingtou.create',compact('userMarketData','marketData'));
     }
 
     /**
@@ -197,8 +204,15 @@ class AipController extends Controller
         if(!empty($aipData['day'])){
             $aipData['day'] = explode(',',$aipData['day']);
         }
-        // TODO 查询市场key
-        return view('frontend.dingtou.edit',compact('aipData'));
+        // 获取市场key
+        $uid = Auth::user()->id();
+        $userMarketData = UserMarketModel::where('uid',$uid)->get();
+        // 如果还没有创建市场key,返回错误
+        if(empty( $userMarketData )){
+            return $this->errorBackTo("<a href='/market/create'>请创建市场key!</a>");
+        }
+        $marketData = MarketModel::getMarketName();
+        return view('frontend.dingtou.edit',compact('aipData','userMarketData','marketData'));
     }
 
     /**

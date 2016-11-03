@@ -33,7 +33,7 @@ class MarketController extends Controller
     public function create()
     {
         // 进入创建页面
-        $midData = MarketModel::getMarketName(1,"ALL");
+        $midData = MarketModel::getMarketName();
         return view('frontend.market.create',compact('midData' ));
     }
 
@@ -101,7 +101,7 @@ class MarketController extends Controller
     public function edit($id)
     {
         // 进入编辑市场key页面
-        $midData = MarketModel::getMarketName(1,"ALL");
+        $midData = MarketModel::getMarketName();
         $userMarketData = UserMarketModel::find( $id );
         return view('frontend.market.edit',compact('midData','userMarketData' ));
     }
