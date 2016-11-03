@@ -13,7 +13,7 @@
         <ul id="yw3" class="nav navbar-nav" role="menu">
             <li><a tabindex="-1" href="/market">市场</a></li>
             <li><a tabindex="-1" href="/dingtou">定投</a></li>
-            <li><a tabindex="-1" href="/arb">搬砖</a></li>
+            {{--<li><a tabindex="-1" href="/arb">搬砖</a></li>--}}
 
         </ul>
         <ul id="yw4" class="navbar-right nav navbar-nav" role="menu">
