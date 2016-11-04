@@ -9,6 +9,7 @@ use App\Jobs\BCoin\OKCoinRpc\OKCoin_ApiKeyAuthentication;
 use App\Jobs\BCoin\Poloniex;
 use App\Models\HuoBiBtc1MinKlineDataModel;
 use App\Models\OkCoinBtc1MinKlineDataModel;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class BDataKlineCommand extends Command
@@ -62,95 +63,99 @@ class BDataKlineCommand extends Command
      */
     public function handle()
     {
-        
-        // 获取参数
-        $platformName  = $this->argument('platformName');
-        $symbol        = $this->argument('symbol');
-        $type          = $this->option('type');
-        $result = [];
-        echo $platformName ." $symbol " .  ' begin ';
-        // 根据平台名称调用不同的接口
-        switch ( $platformName ){
-            // 获取OKCoin Kline行情
-            case 'OkCoin':
-                // 每天十二点获取分钟线存储
-                $client = new OKCoin( new OKCoin_ApiKeyAuthentication() );
-                $result = $client -> klineDataApi( $symbol ,  $type );
-                foreach ($result as $value){
-                    $inArr[] =[
-                        'date'  => $value[0] / 1000,
-                        'open'  => $value[1],
-                        'high'  => $value[2],
-                        'low'   => $value[3],
-                        'last'  => $value[4],
-                        'vol'   => $value[5],
-                    ];
-                }
-                if(empty($inArr) ){
-                    echo '数据获取失败!' ;
+        $startTime =  Carbon::now();
+        try {
+            // 获取参数
+            $platformName = $this->argument('platformName');
+            $symbol = $this->argument('symbol');
+            $type = $this->option('type');
+            $result = [];
+            echo $startTime. ' : ' . $platformName . " $symbol " . ' begin ' . PHP_EOL;
+            // 根据平台名称调用不同的接口
+            switch ($platformName) {
+                // 获取OKCoin Kline行情
+                case 'OkCoin':
+                    // 每天十二点获取分钟线存储
+                    $client = new OKCoin(new OKCoin_ApiKeyAuthentication());
+                    $result = $client->klineDataApi($symbol, $type);
+                    foreach ($result as $value) {
+                        $inArr[] = [
+                            'date' => $value[0] / 1000,
+                            'open' => $value[1],
+                            'high' => $value[2],
+                            'low' => $value[3],
+                            'last' => $value[4],
+                            'vol' => $value[5],
+                        ];
+                    }
+                    if (empty($inArr)) {
+                        echo '数据获取失败!';
+                        break;
+                    }
+                    $resCount = OkCoinBtc1MinKlineDataModel::insert($inArr);
+                    echo date('Y-m-d H:i:s', $inArr[0]['date']) . ' to ' . date('Y-m-d H:i:s', end($inArr)['date']) . ' results ' . $resCount . "\r\n";
                     break;
-                }
-                $resCount = OkCoinBtc1MinKlineDataModel::insert($inArr);
-                echo date( 'Y-m-d H:i:s' , $inArr[0]['date']) .' to '.  date( 'Y-m-d H:i:s' , end($inArr)['date']) .' results '. $resCount ."\r\n";
-                break;
-            // 获取 HuoBi Kline行情
-            case 'HuoBi':
-                $result = HuoBi::klineDataApi( $symbol , $type );
-                foreach ($result as $value){
-                    $inArr[] =[
-                        'date'  => strtotime( $value[0] / 100000 ),
-                        'open'  => $value[1],
-                        'high'  => $value[2],
-                        'low'   => $value[3],
-                        'last'  => $value[4],
-                        'vol'   => $value[5],
-                    ];
-                }
-                if(empty($inArr) ){
-                    echo '数据获取失败!' ;
+                // 获取 HuoBi Kline行情
+                case 'HuoBi':
+                    $result = HuoBi::klineDataApi($symbol, $type);
+                    foreach ($result as $value) {
+                        $inArr[] = [
+                            'date' => strtotime($value[0] / 100000),
+                            'open' => $value[1],
+                            'high' => $value[2],
+                            'low' => $value[3],
+                            'last' => $value[4],
+                            'vol' => $value[5],
+                        ];
+                    }
+                    if (empty($inArr)) {
+                        echo '数据获取失败!';
+                        break;
+                    }
+                    $resCount = HuoBiBtc1MinKlineDataModel::insert($inArr);
+                    echo date('Y-m-d H:i:s', $inArr[0]['date']) . ' to ' . date('Y-m-d H:i:s', end($inArr)['date']) . ' results ' . $resCount . "\r\n";
                     break;
-                }
-                $resCount = HuoBiBtc1MinKlineDataModel::insert($inArr);
-                echo date( 'Y-m-d H:i:s' , $inArr[0]['date']) .' to '.  date( 'Y-m-d H:i:s' , end($inArr)['date']) .' results '. $resCount ."\r\n";
-                break;
-            // 获取 比特币交易网 Kline行情
-            case 'BtcTrade':
-                echo 'not ok';
-                break;
-                $result = BtcTrade::klineDataApi();
-                foreach ($result as $value){
-                    $inArr[] =[
-                        'date'  => strtotime( $value[0] / 100000 ),
-                        'open'  => $value[1],
-                        'high'  => $value[2],
-                        'low'   => $value[3],
-                        'last'  => $value[4],
-                        'vol'   => $value[5],
-                    ];
-                }
-                if(empty($inArr) ){
-                    echo '数据获取失败!' ;
+                // 获取 比特币交易网 Kline行情
+                case 'BtcTrade':
+                    echo 'not ok';
                     break;
-                }
-                $resCount = HuoBiBtc1MinKlineDataModel::insert($inArr);
-                echo date( 'Y-m-d H:i:s' , $inArr[0]['date']) .' to '.  date( 'Y-m-d H:i:s' , end($inArr)['date']) .' results '. $resCount ."\r\n";
-                break;
-            // 获取 BTCC Kline行情
-            case 'BTCC':
-                echo 'not ok';
-                break;
-                $result = BTCC::klineDataApi();
-                break;
-            // 获取 Poloniex Kline行情
-            case 'Poloniex':
-                echo 'not ok';
-                break;
-                $poloniex =  new Poloniex('','');
-                $result = $poloniex->get_trade_history('BTC_NXT');
-                break;
-            default:
-                echo '还未开发的网站!';
-                break;
+                    $result = BtcTrade::klineDataApi();
+                    foreach ($result as $value) {
+                        $inArr[] = [
+                            'date' => strtotime($value[0] / 100000),
+                            'open' => $value[1],
+                            'high' => $value[2],
+                            'low' => $value[3],
+                            'last' => $value[4],
+                            'vol' => $value[5],
+                        ];
+                    }
+                    if (empty($inArr)) {
+                        echo '数据获取失败!';
+                        break;
+                    }
+                    $resCount = HuoBiBtc1MinKlineDataModel::insert($inArr);
+                    echo date('Y-m-d H:i:s', $inArr[0]['date']) . ' to ' . date('Y-m-d H:i:s', end($inArr)['date']) . ' results ' . $resCount . "\r\n";
+                    break;
+                // 获取 BTCC Kline行情
+                case 'BTCC':
+                    echo 'not ok';
+                    break;
+                    $result = BTCC::klineDataApi();
+                    break;
+                // 获取 Poloniex Kline行情
+                case 'Poloniex':
+                    echo 'not ok';
+                    break;
+                    $poloniex = new Poloniex('', '');
+                    $result = $poloniex->get_trade_history('BTC_NXT');
+                    break;
+                default:
+                    echo '还未开发的网站!';
+                    break;
+            }
+        }catch (\Exception $e ){
+            \Log::error($startTime . $e->getMessage());
         }
     }
 }
