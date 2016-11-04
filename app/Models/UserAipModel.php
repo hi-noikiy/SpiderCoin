@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $uid
  * @property string $aip_id
  * @property integer $amount
- * @property string $add_at
+ * @property string $at
+ *
  */
 class UserAipModel extends Model{
 
