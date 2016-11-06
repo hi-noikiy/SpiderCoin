@@ -5,7 +5,8 @@ Route::resource('dingtou', 'Dingtou\AipController');
 Route::resource('market', 'Market\MarketController');
 /* 搬砖管理模块 */
 Route::resource('arb', 'Arb\ArbController');
-
+/* 网格管理模块 */
+Route::resource('grid', 'Grid\GridController');
 /* 定投账单模块 */
 Route::get('dingtou/{aip_id}/bill', [
     'as'         => 'dingtou.bill',

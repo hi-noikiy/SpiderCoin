@@ -1,4 +1,4 @@
-<nav containeroptions="1" class="navbar navbar-default" role="navigation">
+ <nav containeroptions="1" class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
         <button class="navbar-toggle" data-toggle="collapse" data-target="#yw5" type="button">
             <span class="icon-bar"></span>
@@ -13,7 +13,7 @@
         <ul id="yw3" class="nav navbar-nav" role="menu">
             <li><a tabindex="-1" href="/market">市场</a></li>
             <li><a tabindex="-1" href="/dingtou">定投</a></li>
-            {{--<li><a tabindex="-1" href="/arb">搬砖</a></li>--}}
+            <li><a tabindex="-1" href="/grid">网格</a></li>
 
         </ul>
         <ul id="yw4" class="navbar-right nav navbar-nav" role="menu">
